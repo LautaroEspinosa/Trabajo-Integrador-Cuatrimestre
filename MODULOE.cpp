@@ -21,18 +21,18 @@ int registro (int gg)
 {
 	char nom1 [10];
 	char nom2 [10];
-	FILE*Usuario;
+	FILE*profesionales;
 	FILE*pass;
 	
-	Usuario = fopen ("profesionales.dat","r");
-	pass = fopen ("contraseñas.dat","r");
+	profesionales = fopen ("profesionales.dat","r");
+	pass = fopen ("contrasenas.dat","r");
 	
 	printf ("\t Iniciar sesion \n");
 	_flushall();
 	printf ("\nIngrese su nombre de usuario: ");
 	gets (nom1);
-	fread (&nombre, sizeof(char), 1, Usuario);
-		while (!feof(Usuario))
+	fread (&nombre, sizeof(char), 1, profesionales);
+		while (!feof(profesionales))
 			{
 				if (strcmp (nom1,nombre)==0)
 				{
@@ -43,11 +43,11 @@ int registro (int gg)
 					while (!feof(pass))
 					{
 						if (strcmp (nom1,pass)==0)
-						gg=1; // El numero de gg va a ser el indicador de que doctor estamos hablando;
+						gg=1; 
 						return (gg);
 						
 						else
-						fread (&contrasena, sizeof(char), 1, pass);
+						fread (&contrasenas, sizeof(char), 1, pass);
 					}
 				}
 				else
@@ -60,35 +60,50 @@ int registro (int gg)
 		printf ("\n Ingrese nuevamente el usuario y contraseña");
 		return (gg);
 	}
-	//idea: para abrir la informacion de un medico guardar en distintos archs su info
-	//usar gg para indicar que arch de que medico voy a usar para acceder a la info mas facil
 	//consulte un archivo con las contraseñas, las compara una por una hasta encontrar una igual
 	//Cada contraseña tiene asiganada un numero
-	
 	
 }
 
 int lista ()
 
 {
-	int auxg;
-	//consultar el archivo segun la "llave" que tenga el gg
-	arch = fopen ("contraseñas.dat","r");
-	arch = fopen ("xxx.dat","r+");
-	//auxg es una guia para el archivo del doctor a abrir
+	FILE*clientes;
+	FILE*Turnos;
+	clientes = fopen ("clientes.dat","r+");
+	turnos = fopen ("turnos.dat","r+");
+
+	fread (&turnos, sizeof(char), 1, arch);
 	
-	if (auxg == n)
-	{
-		//abre los archivos de un doctor
+	while (!feof(arch) )
+    {	
+    	{
+			printf ("\n\n Apellido y nombre: %s ", empresa.apyn);
+			printf ("\n\n Numero de vendedor: %d ", empresa.numv);
+			printf ("\n\n Importe: %f ", empresa.importe);
+			printf ("\n\n Forma de pago: %d ", empresa.form);
+			printf ("\n\n Factura: %d ", empresa.fact);
+			printf ("\n\n %d - %d - %d ", empresa.fecc.anio, empresa.fecc.mes, empresa.fecc.dia);
+    		printf ("\n\n ------------------------------------- \n\n");	
+    		fread (&empresa, sizeof(registro), 1, arch);
+   		}
 	}
-	n++;
-	//limite de doctores?
+	
 }
 
 int plus ()
 
 {
-	FILE* (registro de DNIs de pacientes)
+	FILE* clientes;
+	FILE* Turnos;
+	FILE* ficha;
+	char auxnom[60];
+	int dia,mes,anio;
+	char evolucion [380];
+	
+	ficha = fopen("tratamiento.txt","ab+");
+	clientes = fopen("clientes.dat","ab+");
+	Turnos = fopen("turnos.dat","ab+");
 	
 	printf (" Ingrese el DNI del paciente: ");
 	scanf ("%d", &DNIp);
@@ -97,11 +112,29 @@ int plus ()
 			if (DNIp == DNI.reg)
 			printf ("Nombre: %s \n Apellido: %s \n DNI: %d \n CodP: ")
 		}
-
+		
+	ficha = fopen("tratamiento.txt","ab+");
 	
+	_flushall();
+	printf ("\n Escriba su nombre: ");
+		gets (auxnom);
+	printf("\n Escriba el día de la fecha ");
+		scanf ("%d", &dia);
+		scanf ("%d", &mes);
+		scanf ("%d", &anio);
+		fprintf (tratamiento.txt "\n Dia: %d / Mes: %d / Anio: %d", dia, mes, anio );
+	_flushall();
+	printf("\n Evolucion del paciente (por favor no exceder los 380 caracteres) \n ");	
+		gets (evolucion);
+		fprintf (tratamiento.txt "%s", evolucion );
+	fclose(ficha);
 	
 
 	//tiene que salir de la cola de atendidos
+	
+	
+	
+	
 }
 main ()
 
@@ -113,12 +146,12 @@ main ()
 	do
 	{
 		system("cls");
-		while (gg==0)
+			while (gg==0)
 		{
-		gg = registro (gg);
+			gg = registro (gg);
 		}
 		
-	fclose (Usuario);
+	fclose (profesionales);
 	fclose (pass);
 		
 		opcc= menu(gg);
