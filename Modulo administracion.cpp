@@ -15,44 +15,54 @@ struct Prof {
 	int dni;
 	char tel[25];
 };
+
 //Estructura p/creacion de usuario
 struct user{
 	char usuario[11];
 	char pass[33];
 	char Apynom[61];
 };
-void creacionUsuario(int &comprobacionusuario, int tam, user us[100]); //Prototipo de funcion
-void pass1();//prototipo de funcion
+void creacionUsuario(int &comprobacionusuario, int tam, user us[100], FILE *ara); //Prototipo de funcion
+
 
 main(){
-	int comprobacionusuario=0,i, tam=5;// tam =5 por ahora
+	FILE *ar;
+	int l=0;
+	
+	ar=fopen("Profesionales.dat", "a+b");
+	int comprobacionusuario=0,i, tam=0;
 	user us [100];
-	cout<<"\nIngrese usuarios ";
+	rewind(ar);
+	fread(&us[tam],sizeof(user),1,ar);
+	
+	while(!feof(ar)){
+		tam++;
+		fread(&us[tam],sizeof(user),1,ar);
+	}
+	cout<<"\ntam="<<tam;
+	fclose(ar);
+	/*cout<<"\nIngrese usuarios ";
 	for(i=0;i<5;i++){
 		cout<<"\nIngrese nombre de usuario ";
 		_flushall();
 		gets(us[i].usuario);
-	}
-		creacionUsuario(comprobacionusuario, tam, us);
-		system("cls");
-		pass1();
+	}*/
+		creacionUsuario(comprobacionusuario, tam, us,ar);
+		//system("cls");
+	//	pass1();
+
 }
 
 
 
 
-
-
-
-
-
-
-
-void creacionUsuario(int &comprobacionusuario, int tam, user us[100]){
-	cout<<"\nPrimero debe escoger un nombre de usuario";
+void creacionUsuario(int &comprobacionusuario, int tam, user us[100], FILE *ar){
 	char nomus[100];
-	int largo, i, comp, mayus=0,dig=0, conda=0,condb=0,condc=0,j, comparacionreg=0,bandera3=0, condD=0,bandera4=0;
+	int largo, i, comp, mayus=0,dig=0, conda=0,condb=0,condc=0,j, comparacionreg=0,bandera3=0, condD=0,bandera4=0;//variables de nombre de usuario
+	int bandera,cant,numeros=0,mayus2=0,minus=0, cons=0,numcons=0, contracorrecta=0, letcons, band2=0, val2,val1,resultado=0,res;//variables de contrasena
+	char password[100];
 	cout<<"\nPrimero debe escoger un nombre de usuario";
+	//CREACION NOMBRE DE USUARIO
 	do{
 		conda=0;
 		condb=0;
@@ -96,27 +106,32 @@ if(conda==1 and condb==1 and condc==1 and condD==1){
 	}
 }
 else{
-	cout<<"\nEl nombre de usuario no cumple con las condiciones requeridas";
+	cout<<"\nEl nombre de usuario no cumple con las condiciones requeridas\n";
+	system("pause");
+system("cls");
+	
 }
 	if(bandera3==1){
-		cout<<"El nombre de usuario ya ha sido escogido. Elija otro";
+		cout<<"El nombre de usuario ya ha sido escogido. Elija otro\n";
+		system("pause");
+system("cls");
 	}
 if(conda==1 and condb==1 and condc==1 and condD==1 and bandera3!=1){
 	cout<<"\nEl nombre de usuario\n ";
 	puts(nomus);
 	cout<<" ha sido elegido correctamente.";
 	bandera4=1;
-	system("pause");
+
 	}
 }while(bandera4==0);
-}
+system("pause");
+system("cls");
 
-void pass1(){
-int i,bandera,cant,numeros=0,mayus=0,minus=0, cons=0,numcons=0,j, contracorrecta=0, letcons, band2=0, val2,val1,resultado=0,res;
-	char password[100];
-	do{
+//CREACION DE CONTRASEÑA
+
+do{
 		numeros=0;
-		mayus=0;
+		mayus2=0;
 		minus=0;
 		cons=0;
 		numcons=0;
@@ -139,7 +154,7 @@ int i,bandera,cant,numeros=0,mayus=0,minus=0, cons=0,numcons=0,j, contracorrecta
 		}
 		if(password[i]>=65 and password[i]<=90){
 				bandera=1;
-				mayus++;
+				mayus2++;
 			}
 			if(password[i]>=97 and password[i]<=122){
 					minus++;
@@ -184,7 +199,6 @@ int i,bandera,cant,numeros=0,mayus=0,minus=0, cons=0,numcons=0,j, contracorrecta
 				if(band2!=1){
 				contracorrecta=1;
 		cout<<"\nLa contrasena es correcta\n\n";
-		system("pause");
 	}
 	}
 	}
@@ -192,10 +206,31 @@ int i,bandera,cant,numeros=0,mayus=0,minus=0, cons=0,numcons=0,j, contracorrecta
 }
 
 if(contracorrecta!=1){
-		cout<<"\nLa password no cumple con las condiciones requeridas. Elija otra";
+		cout<<"\nLa password no cumple con las condiciones requeridas. Elija otra\n\n";
+		system("pause");
+		system("cls");
 }
 
 }while(contracorrecta==0);
-}
 
+//Agregar nombre y apellido
+system("pause");
+system("cls");
+cout<<"\nAgregar nombre y apellido\n";
+gets(us[tam].Apynom);
+//Agregar nombre de usuario y password al registro
+strcpy(us[tam].usuario,nomus);
+strcpy(us[tam].pass,password);
+tam++;
+ar=fopen("Profesionales.dat", "wb");
+rewind(ar);
+for(i=0;i<tam;i++){
+fwrite(&us[i],sizeof(user),1,ar);
+}
+cout<<"\n";
+fclose(ar);
+
+system("pause");
+system("cls");
+}
 
