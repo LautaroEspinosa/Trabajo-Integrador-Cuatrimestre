@@ -2,27 +2,10 @@
 #include<stdio.h>
 #include<string.h>
 
-int menu(int gg)
-{
-	int opcion = 0;
-	int x;
-	
-	if (gg )
-	
-	printf ("\tMENU PRINCIPAL DE DOCTOR %s ", );
-	printf ("\n1. Visualizar lista de espera.");
-	printf ("\n2. Registrar datos de evolucion del tratamiento.");
-	printf ("\n3. Salir.");
-	
-	return opcion;
-}
-
-int registro (int gg)
+int registro (int FILE*profesionales, FILE*pass)
 {
 	char nom1 [10];
 	char nom2 [10];
-	FILE*profesionales;
-	FILE*pass;
 	
 	profesionales = fopen ("profesionales.dat","r");
 	pass = fopen ("contrasenas.dat","r");
@@ -39,20 +22,20 @@ int registro (int gg)
 					_flushall();
 					printf("\nIngrese su contraseña");
 					gets (nom2); 
-					fread (&contrasena, sizeof(char), 1, pass);
+					fread (&password, sizeof(char), 1, pass);
 					while (!feof(pass))
 					{
-						if (strcmp (nom1,pass)==0)
+						if (strcmp (nom1,password)==0)
 						gg=1; 
 						return (gg);
 						
 						else
-						fread (&contrasenas, sizeof(char), 1, pass);
+						fread (&password, sizeof(char), 1, pass);
 					}
 				}
 				else
 				{
-					fread (&nombre, sizeof(char), 1, Usuario);
+					fread (&nombre, sizeof(char), 1, profesionales);
 				}
 			}
 	if (gg=0)
@@ -61,53 +44,50 @@ int registro (int gg)
 		return (gg);
 	}
 	//consulte un archivo con las contraseñas, las compara una por una hasta encontrar una igual
-	//Cada contraseña tiene asiganada un numero
-	
 }
 
-int lista ()
+void lista (FILE*archi)
 
 {
-	FILE*clientes;
-	FILE*Turnos;
+	int ID;
 	clientes = fopen ("clientes.dat","r+");
-	turnos = fopen ("turnos.dat","r+");
-
-	fread (&turnos, sizeof(char), 1, arch);
+	archi = fopen ("Turnos.dat","r+");
 	
-	while (!feof(arch) )
+	printf ("\n Ingrese su ID de profesional");
+	scanf ("%d", &ID);
+	fread (&regi, sizeof(regi), 1, archi);
+	while (!feof(archi))
     {	
+    	if (ID == regi.idprof)
     	{
 			printf ("\n\n Apellido y nombre: %s ", empresa.apyn);
-			printf ("\n\n Numero de vendedor: %d ", empresa.numv);
-			printf ("\n\n Importe: %f ", empresa.importe);
-			printf ("\n\n Forma de pago: %d ", empresa.form);
-			printf ("\n\n Factura: %d ", empresa.fact);
-			printf ("\n\n %d - %d - %d ", empresa.fecc.anio, empresa.fecc.mes, empresa.fecc.dia);
+			printf ("\n\n DNI: %d ", regi.dni);
+			printf ("\n\n Detalle de atención: %s ", regi.detaten);
+			printf ("\n\n %d - %d - %d ", regi.fech.year, regi.fech.mes, regi.fech.dia);
     		printf ("\n\n ------------------------------------- \n\n");	
-    		fread (&empresa, sizeof(registro), 1, arch);
+    		fread (&regi, sizeof(regi), 1, archi);
    		}
 	}
-	
+	fclose (archi);	
 }
 
-int plus ()
+int plus (FILE* ficha, FILE* archi, FILE* clientes)
 
 {
-	FILE* clientes;
-	FILE* Turnos;
-	FILE* ficha;
+	
 	char auxnom[60];
-	int dia,mes,anio;
+	int dia,mes,anio, DNIp;
 	char evolucion [380];
 	
 	ficha = fopen("tratamiento.txt","ab+");
 	clientes = fopen("clientes.dat","ab+");
-	Turnos = fopen("turnos.dat","ab+");
+	Turnos = fopen("Turnos.dat","ab+");
+	
+	//realizar copia
 	
 	printf (" Ingrese el DNI del paciente: ");
 	scanf ("%d", &DNIp);
-	while (DNIp == DNI.reg)
+	while (DNIp == regi.dni)
 		{
 			if (DNIp == DNI.reg)
 			printf ("Nombre: %s \n Apellido: %s \n DNI: %d \n CodP: ")
@@ -140,8 +120,6 @@ main ()
 
 {
 	int opcc=0, N, I, gg=0;
-	File*Usuario;
-	FILE*pass;
 	
 	do
 	{
