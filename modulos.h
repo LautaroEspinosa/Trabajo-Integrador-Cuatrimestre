@@ -76,37 +76,55 @@ int registro ( int gg)
 	char contra1[33];
 	int contador=0, contcorr=0, usercorr=0, comp, comp2=1, i=0;
 	user us[100];
-	ar=fopen("Profesionales.dat","r+b");
+	ar=fopen("Profesionales.dat","r");
 	fread(&us, sizeof(user),1,ar);
-	while(!feof(ar)){
-		contador++;
-		fread(&us, sizeof(user),1,ar);
+	
+	do 
+	{
+		printf("\nIngrese el nombre de usuario, no podrá ingresar si el espacio está en blanco ");
+		_flushall();
+		gets(usuario1);
 	}
-	printf("\nIngrese el nombre de usuario ");
-	_flushall();
-	gets(usuario1);
+	while (strcmp(usuario1,"")==0);
 	comp=strcmp(usuario1,us[i].usuario);
-	while(comp!=0){
+	i=0;
+	
+	while(comp!=0)
+	{
 		printf("\nEl usuario ingresado no esta registrado\n");
 		system("pause");
 		system("cls");
-		printf("\nIngrese el nombre de usuario ");
-		_flushall();
-		gets(usuario1);
+		printf("\nIngrese el nombre de usuario, no podrá ingresar si el espacio está en blanco ");
+		do 
+		{
+			printf("\nIngrese el nombre de usuario, no podrá ingresar si el espacio está en blanco ");
+			_flushall();
+			gets(usuario1);
+		} while (strcmp(usuario1,"")==0);
+		rewind (ar);
+		fread(&us,sizeof(user),1,ar);
 		i++;
 		comp=strcmp(usuario1,us[i].usuario);
 	}
-		printf("\nIngrese la contrasenia: ");
-		_flushall();
-		gets(contra1);
+	do
+		{
+			printf("\nIngrese la contrasenia, no podrá ingresar si el espacio está en blanco ");
+			_flushall();
+			gets(contra1);
+		}
+	while (strcmp(contra1,"")==0);
 		comp2=strcmp(contra1,us[i].pass);
 	while (comp2!=0){
 		printf("\nLa contrasenia ingresada es incorrecta \n");
 		system("pause");
 		system("cls");
-		printf("\nIngrese la contrasenia: ");
-		_flushall();
-		gets(contra1);
+		do
+		{
+			printf("\nIngrese la contrasenia, no podrá ingresar si el espacio está en blanco ");
+			_flushall();
+			gets(contra1);
+		}
+	while (strcmp(contra1,"")==0);
 		comp2=strcmp(contra1,us[i].pass);
 	}
 	if (comp2==0 and comp==0){
@@ -452,7 +470,7 @@ void creacionUsuarioPro( ){
 	//**************************************************************
 	FILE *ar;
 	int l=0;
-	ar=fopen("Profesionales.dat", "a+b");
+	ar=fopen("Profesionales.dat", "ab+");
 	int comprobacionusuario=0, tam=0;
 	user us [100];
 	rewind(ar);
